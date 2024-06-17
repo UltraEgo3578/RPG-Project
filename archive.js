@@ -85,10 +85,10 @@ switch(esc){
 console.log(jogador)
 const inimigos = [
     { nome: "James Da Salada De Fruta", hp: 20, forca: 8, xp: 50 },
-    { nome: "Esqueleto", hp: 15, forca: 5, xp: 30 },
+    { nome: "Esqueleto Do Mine", hp: 15, forca: 5, xp: 30 },
     { nome: "Ricardo Milos", hp: 12, forca: 4, xp: 20 },
     { nome: "Takamura Mamoru", hp: 30, forca: 30, xp: 100 },
-    { nome: "Hidra", hp: 25, forca: 9, xp: 80 },
+    { nome: "Gorila Roxo", hp: 25, forca: 9, xp: 80 },
     { nome: "Bruxo", hp: 30, forca: 7, xp: 60 },
     { nome: "Barata Gigante", hp: 10, forca: 3, xp: 15 },
     { nome: "Lobo Pidão", hp: 13, forca: 6, xp: 25 }
