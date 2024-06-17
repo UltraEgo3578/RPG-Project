@@ -1,11 +1,5 @@
 
-function batalha(jog,ini){
-    console.log(jog.nome+" VS "+ini.nome)
-    while(jog.hp>0&&ini.hp>0){
-        jog.hp--
-        ini.hp--
-    }
-}
+
 let jogador = {
     nome: "" ,
     classe: "",
@@ -90,12 +84,58 @@ switch(esc){
 }
 console.log(jogador)
 const inimigos = [
-    { nome: "", hp: 20, forca: 8, xp: 50 },
+    { nome: "James Da Salada De Fruta", hp: 20, forca: 8, xp: 50 },
     { nome: "Esqueleto", hp: 15, forca: 5, xp: 30 },
     { nome: "Ricardo Milos", hp: 12, forca: 4, xp: 20 },
-    { nome: "Dragão", hp: 30, forca: 10, xp: 100 },
+    { nome: "Takamura Mamoru", hp: 30, forca: 30, xp: 100 },
     { nome: "Hidra", hp: 25, forca: 9, xp: 80 },
     { nome: "Bruxo", hp: 30, forca: 7, xp: 60 },
-    { nome: "Morcego Gigante", hp: 10, forca: 3, xp: 15 },
-    { nome: "Lobo", hp: 13, forca: 6, xp: 25 }
-    
+    { nome: "Barata Gigante", hp: 10, forca: 3, xp: 15 },
+    { nome: "Lobo Pidão", hp: 13, forca: 6, xp: 25 }
+]
+function escolherMonstroAleatorio() {
+    const indice = getRandomInt(0, monstros.length - 1);
+    return monstros[indice];
+}   
+function batalhar(monstro) {
+    console.log(`Um ${monstro.nome} apareceu!`);
+
+    while (jogadorEstaVivo() && monstro.hp > 0) {
+        console.log(`Seu HP: ${jogador.hp} | HP do ${monstro.nome}: ${monstro.hp}`);
+        const escolhaAcao = prompt("Digite o número da ação escolhida: [1] Atacar | [2] Fugir");
+
+        switch (escolhaAcao) {
+            case "1":
+                console.log("Você atacou o monstro!");
+                const danoJogador = getRandomInt(0, jogador.forca);
+                const danoMonstro = getRandomInt(0, monstro.forca);
+                monstro.hp -= danoJogador;
+                jogador.hp -= danoMonstro;
+                console.log(`Você causou ${danoJogador} de dano ao ${monstro.nome} e recebeu ${danoMonstro} de dano.`);
+                break;
+            case "2":
+                console.log("Você fugiu da batalha!");
+                return; // Encerra a função se o jogador fugir
+            default:
+                console.log("Opção inválida. Escolha novamente.");
+        }
+    }
+
+    if (jogador.hp <= 0) {
+        console.log("Você foi derrotado!");
+    } else {
+        console.log(`Você derrotou o ${monstro.nome}!`);
+        jogador.monstrosDerrotados++; // Incrementa o contador de monstros derrotados
+        ganharXP(monstro.xp); // Ganha XP ao derrotar o monstro
+        ganharGold(10); // Ganha 10 de ouro após cada batalha
+        recuperarVida(); // Recupera um pouco de vida após a batalha
+
+        // Verificar se o jogador derrotou 7 monstros e iniciar a batalha contra o chefe final
+        if (jogador.monstrosDerrotados === 7) {
+            const boss = { nome: "Malenia", hp: 65, forca: 20, xp: 200 };
+            console.log(`Você enfrentará o chefe final, ${boss.nome}!`);
+            batalhar(boss);
+            return; // Encerrar a função após a batalha contra o chefe final
+        }
+    }
+}
